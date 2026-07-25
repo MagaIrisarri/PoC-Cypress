@@ -1,0 +1,21 @@
+# Dependencias
+node_modules/
+
+# Salidas de Cypress
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+
+# Logs
+npm-debug.log*
+*.log
+
+# Variables de entorno
+cypress.env.json
+.env
+
+# Sistema operativo / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
