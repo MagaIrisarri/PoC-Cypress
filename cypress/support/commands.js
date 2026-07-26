@@ -1,25 +1,53 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('iniciarSesion', (usuario, contraseña) => {
+  cy.visit('https://www.saucedemo.com/')
+  cy.get('#user-name').type(usuario) 
+  cy.get('#password').type(contraseña)
+  cy.get('#login-button').click()
+
+})
+
+Cypress.Commands.add('añadirAlCarrito', () => {
+    
+  // Selecciona solo los 3 primeros productos
+  cy.get('.btn_inventory').each((button, index) => {    
+    if (index < 3) {    
+      cy.wrap(button).click();
+    }
+
+  })
+
+})
+
+Cypress.Commands.add('hacerCompra', () => {
+
+  
+  cy.get('#shopping_cart_container > a').click();
+
+  cy.get('#checkout').click(); 
+  
+
+  cy.get('#first-name').type('John');
+
+  cy.get('#last-name').type('Doe');
+
+  cy.get('#postal-code').type('123456');
+
+  cy.get('#continue').click();
+ 
+
+  cy.get('#finish').click(); 
+
+ 
+  cy.contains('Thank you for your order!').should('be.visible');
+
+})
+
+Cypress.Commands.add('cerrarSesion', () => {
+  // Abrir el menú a la izq arriba, las 3 barritas
+  cy.get('#react-burger-menu-btn').click(); 
+  
+  // Esperar dinámicamente a que la animación termine y el enlace sea visible, luego hacer click
+  cy.get('#logout_sidebar_link')
+    .should('be.visible') 
+    .click(); 
+});
