@@ -1,5 +1,7 @@
 describe('SauceDemo - flujos básicos', () => {
   beforeEach(() => {
+    cy.clearCookies();
+    cy.clearLocalStorage();
     cy.visit('/');
     cy.get('#user-name').type('standard_user');
     cy.get('#password').type('secret_sauce');
