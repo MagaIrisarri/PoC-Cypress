@@ -1,0 +1,30 @@
+name: Cypress Tests
+
+on: [push, pull_request]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Ejecutar tests de Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          spec: cypress/e2e/Correcto/**/*.cy.js
+
+      - name: Subir reporte HTML
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reporte-cypress
+          path: cypress/reports
+
+      - name: Subir capturas
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: capturas
+          path: cypress/screenshots
