@@ -51,3 +51,13 @@ Cypress.Commands.add('cerrarSesion', () => {
     .should('be.visible') 
     .click(); 
 });
+
+Cypress.Commands.add(
+  'login',
+  (usuario, pass) => {
+      cy.visit('/');
+      cy.get('#user-name').type(usuario);
+      cy.get('#password').type(pass);
+      cy.get('#login-button').click();
+      cy.url().should('include', '/inventory.html');
+    });
