@@ -9,6 +9,11 @@ jobs:
       - name: Checkout del repositorio
         uses: actions/checkout@v4
 
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Ejecutar tests de Cypress
         uses: cypress-io/github-action@v6
         with:
