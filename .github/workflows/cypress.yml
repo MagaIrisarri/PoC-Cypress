@@ -8,11 +8,25 @@ jobs:
     steps:
       - name: Checkout del repositorio
         uses: actions/checkout@v4
-      - name: Ejecutar tests de Cypress
-        uses: cypress-io/github-action@v6
+
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v4
         with:
-          browser: chrome
-          spec: cypress/e2e/Correcto/**/*.cy.js
+          version: 10
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Instalar binario de Cypress
+        run: pnpm exec cypress install
+
+      - name: Ejecutar tests
+        run: pnpm exec cypress run --browser chrome --spec "cypress/e2e/Correcto/**/*.cy.js"
 
       - name: Subir reporte HTML
         uses: actions/upload-artifact@v4
@@ -27,21 +41,3 @@ jobs:
         with:
           name: capturas
           path: cypress/screenshots
-
-      - name: Instalar pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - name: Instalar dependencias
-        run: pnpm install --frozen-lockfile
-
-      - name: Instalar binario de Cypress
-        run: pnpm exec cypress install
-
-      - name: Ejecutar tests de Cypress
-        uses: cypress-io/github-action@v6
-        with:
-          install: false
-          browser: chrome
-          spec: cypress/e2e/Correcto/**/*.cy.js    
