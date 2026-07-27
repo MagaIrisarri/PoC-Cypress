@@ -16,6 +16,7 @@ describe('Flujo 2 - Agregar item y validar listado', () => {
     cy.get('.shopping_cart_link').click();
     cy.get('.cart_item').should('have.length', 1);
     cy.get('.inventory_item_price').should('have.text', '$29.99');
+    cy.screenshot('carrito-con-producto')
   });
 
 });
