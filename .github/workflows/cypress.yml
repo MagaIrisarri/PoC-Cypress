@@ -8,12 +8,6 @@ jobs:
     steps:
       - name: Checkout del repositorio
         uses: actions/checkout@v4
-
-      - name: Instalar pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
       - name: Ejecutar tests de Cypress
         uses: cypress-io/github-action@v6
         with:
@@ -33,3 +27,21 @@ jobs:
         with:
           name: capturas
           path: cypress/screenshots
+
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Instalar binario de Cypress
+        run: pnpm exec cypress install
+
+      - name: Ejecutar tests de Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          browser: chrome
+          spec: cypress/e2e/Correcto/**/*.cy.js    
